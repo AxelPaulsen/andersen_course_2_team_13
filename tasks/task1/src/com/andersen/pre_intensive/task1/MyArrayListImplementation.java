@@ -82,7 +82,7 @@ public class MyArrayListImplementation implements MyArrayList {
 
     @Override
     public void sort() {
-
+        Arrays.sort(this.internalArray);
     }
 
     @Override
