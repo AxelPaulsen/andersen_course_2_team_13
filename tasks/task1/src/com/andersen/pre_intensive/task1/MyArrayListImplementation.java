@@ -1,16 +1,14 @@
 package com.andersen.pre_intensive.task1;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MyArrayListImplementation implements MyArrayList {
-    /*  предлагаю начать с этого:
 
+    private Object[] internalArray;
+    private int size = 0;
+    private int startSize = 10;
 
-        private Object[] internalArray;
-        private int size = 0;
-        private int startSize = 10;
-
-    public MyTestListImpl() {
+    public MyArrayListImplementation() {
         Object[] newArray = new Object[startSize];
         this.internalArray = newArray;
     }
@@ -24,9 +22,9 @@ public class MyArrayListImplementation implements MyArrayList {
             Object newInternalArray[] = new Object[this.startSize];
 
         } else {
-            int newSize = size() + newElementsCount;  //
-            Object newInternalArray[] = new Object[newSize];
-            newInternalArray = Arrays.copyOfRange(internalArray, 0, size());
+            int newSize = size() + newElementsCount;
+            Object newInternalArray[];
+            newInternalArray = Arrays.copyOf(internalArray, newSize);
             this.internalArray = newInternalArray;
         }
     }
@@ -34,10 +32,22 @@ public class MyArrayListImplementation implements MyArrayList {
     private void growInternalArray(){
         growInternalArray(1);
     }
-     */
+
 
     @Override
     public void add(Object o) {
+        if (o == null) {
+            return;
+        }
+        if (size() < internalArray.length){
+            internalArray[(size()-1)+1] = o;
+            this.size++;
+        }else {
+            growInternalArray();
+            internalArray[(size()-1)+1] = o;
+            this.size++;
+        }
+
 
     }
 
@@ -68,6 +78,6 @@ public class MyArrayListImplementation implements MyArrayList {
 
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 }
