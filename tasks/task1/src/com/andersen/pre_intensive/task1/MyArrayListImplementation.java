@@ -53,7 +53,31 @@ public class MyArrayListImplementation implements MyArrayList {
 
     @Override
     public void add(Object o, int index) {
+        if ((o == null) || (index < 0)) return;
+        if ((size()-1) < index) {
+            add(o);
+            return;
+        }
+        if (size() >= internalArray.length) growInternalArray();
 
+        int newSize = size()+1;
+
+        if (index == 0) {
+            Object[] newInternalArray = new Object[newSize];
+            newInternalArray[0] = o;
+            System.arraycopy(internalArray, 0, newInternalArray, 1, size());
+            this.internalArray = newInternalArray;
+            this.size++;
+
+        }else{
+            Object[] newInternalArray = new Object[newSize];
+
+            System.arraycopy(internalArray, 0, newInternalArray, 0, index);
+            System.arraycopy(internalArray, index, newInternalArray, index+1, size()-index);
+            newInternalArray[index] = o;
+            this.internalArray = newInternalArray;
+            this.size++;
+        }
     }
 
     @Override
