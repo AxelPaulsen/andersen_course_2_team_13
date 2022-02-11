@@ -3,7 +3,7 @@ package com.andersen.pre_intensive.task1;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class MyArrayListImplementation<T> implements MyArrayList {
+public class MyArrayListImplementation<T> implements MyArrayList<T> {
 
     private T[] internalArray;
     private int size = 0;
@@ -14,12 +14,12 @@ public class MyArrayListImplementation<T> implements MyArrayList {
         this.internalArray = (T[])newArray;
     }
 
-    public MyTestListImpl(Class<T> type, int size){
+    public MyArrayListImplementation(Class<T> type, int size){
         this.internalArray = (T[]) Array.newInstance(type, size);
         this.size = size;
     }
 
-    public MyTestListImpl(Class<T> type){
+    public MyArrayListImplementation(Class<T> type){
         this.internalArray = (T[])Array.newInstance(type, startSize);
 
     }
