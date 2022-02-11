@@ -97,8 +97,16 @@ public class MyArrayListImplementation<T> implements MyArrayList<T> {
     }
 
     @Override
-    public void concat(MyArrayList newList) {
+    public void concat(MyArrayList<T> newList) {
 
+        if (internalArray.length < size + newList.size()) {
+            growInternalArray(newList.size() - (internalArray.length - size));
+        }
+
+        for (int i = 0; i < newList.size(); i++) {
+            internalArray[size + i] = newList.get(i);
+        }
+        size += newList.size();
     }
 
     @Override
