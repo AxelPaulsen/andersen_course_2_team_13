@@ -7,14 +7,19 @@ import java.util.Comparator;
 
 public class MyArrayListImplementation<T> implements MyArrayList<T> {
 
+
     private T[] internalArray;
     private int size = 0;
     private int startSize = 10;
 
+
+
     public MyArrayListImplementation() {
         Object[] newArray = new Object[startSize];
         this.internalArray = (T[]) newArray;
+
     }
+    
 
     public MyArrayListImplementation(int size) {
         Object[] newArray = new Object[size];
