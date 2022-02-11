@@ -1,46 +1,52 @@
 package com.andersen.pre_intensive.task1;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
-public class MyArrayListImplementation<T> implements MyArrayList <T> {
+public class MyArrayListImplementation<T> implements MyArrayList<T> {
+
 
     private T[] internalArray;
     private int size = 0;
     private int startSize = 10;
 
-    public MyArrayListImplementation (T[] inArr) {
-        this.internalArray = inArr;
+
+
+    public MyArrayListImplementation() {
+        Object[] newArray = new Object[startSize];
+        this.internalArray = (T[]) newArray;
+
     }
     
 
-    public MyTestListImpl(Class<T> type, int size){
-        this.internalArray = (T[]) Array.newInstance(type, size);
-        this.size = size;
+    public MyArrayListImplementation(int size) {
+        Object[] newArray = new Object[size];
+        this.internalArray = (T[]) newArray;
     }
 
-    public MyTestListImpl(Class<T> type){
-        this.internalArray = (T[])Array.newInstance(type, startSize);
-
+    public MyArrayListImplementation(Class<T> type) {
+        this.internalArray = (T[]) Array.newInstance(type, startSize);
     }
 
-    public boolean isEmpty(){
-       return size == 0;
+    public boolean isEmpty() {
+        return size == 0;
     }
 
-    private void growInternalArray(int newElementsCount){
+    private void growInternalArray(int newElementsCount) {
         if (isEmpty()) {
             Object newInternalArray[] = new Object[this.startSize];
-            this.internalArray = (T[])newInternalArray;
+            this.internalArray = (T[]) newInternalArray;
         } else {
-            int newSize = size() + newElementsCount;
+            int newSize = internalArray.length + newElementsCount;
             Object newInternalArray[];
             newInternalArray = Arrays.copyOf(internalArray, newSize);
-            this.internalArray = (T[])newInternalArray;
+            this.internalArray = (T[]) newInternalArray;
         }
     }
 
-    private void growInternalArray(){
+    private void growInternalArray() {
         growInternalArray(1);
     }
 
@@ -51,11 +57,11 @@ public class MyArrayListImplementation<T> implements MyArrayList <T> {
             return;
         }
         if (size() < internalArray.length) {
-            internalArray[(size() - 1) + 1] = (T)o;
+            internalArray[(size() - 1) + 1] = (T) o;
             this.size++;
         } else {
             growInternalArray();
-            internalArray[(size() - 1) + 1] = (T)o;
+            internalArray[(size() - 1) + 1] = (T) o;
             this.size++;
         }
     }
@@ -65,11 +71,11 @@ public class MyArrayListImplementation<T> implements MyArrayList <T> {
         if ((o == null) || (index < 0)) {
             return;
         }
-        if ((size()-1) < index) {
+        if ((size() - 1) < index) {
             add(o);
             return;
         }
-        int newSize = size()+1;
+        int newSize = size() + 1;
 
         if (size() >= internalArray.length) growInternalArray();
 
@@ -77,16 +83,16 @@ public class MyArrayListImplementation<T> implements MyArrayList <T> {
             Object[] newInternalArray = new Object[newSize];
             newInternalArray[0] = o;
             System.arraycopy(internalArray, 0, newInternalArray, 1, size());
-            this.internalArray = (T[])newInternalArray;
+            this.internalArray = (T[]) newInternalArray;
             this.size++;
 
-        }else{
+        } else {
             Object[] newInternalArray = new Object[newSize];
 
             System.arraycopy(internalArray, 0, newInternalArray, 0, index);
-            System.arraycopy(internalArray, index, newInternalArray, index+1, size()-index);
+            System.arraycopy(internalArray, index, newInternalArray, index + 1, size() - index);
             newInternalArray[index] = o;
-            this.internalArray = (T[])newInternalArray;
+            this.internalArray = (T[]) newInternalArray;
             this.size++;
         }
     }
@@ -97,16 +103,24 @@ public class MyArrayListImplementation<T> implements MyArrayList <T> {
     }
 
     @Override
-    public void concat(MyArrayList newList) {
+    public void concat(MyArrayList<T> newList) {
 
+        if (internalArray.length < size + newList.size()) {
+            growInternalArray(newList.size() - (internalArray.length - size));
+        }
+
+        for (int i = 0; i < newList.size(); i++) {
+            internalArray[size + i] = newList.get(i);
+        }
+        size += newList.size();
     }
 
     @Override
     public boolean delete(int index) {
         if ((isEmpty()) || (index < 0) || (index >= size())) return false;
 
-        System.arraycopy(internalArray, index+1, internalArray, index, size()-1-index);
-        internalArray[size()-1]=null;
+        System.arraycopy(internalArray, index + 1, internalArray, index, size() - 1 - index);
+        internalArray[size() - 1] = null;
         this.size--;
         return true;
     }
@@ -122,3 +136,4 @@ public class MyArrayListImplementation<T> implements MyArrayList <T> {
         return this.size;
     }
 }
+
