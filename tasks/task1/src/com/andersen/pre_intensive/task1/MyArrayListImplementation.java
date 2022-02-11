@@ -92,7 +92,12 @@ public class MyArrayListImplementation implements MyArrayList {
 
     @Override
     public boolean delete(int index) {
-        return false;
+        if ((isEmpty()) || (index < 0) || (index >= size())) return false;
+
+        System.arraycopy(internalArray, index+1, internalArray, index, size()-1-index);
+        internalArray[size()-1]=null;
+        this.size--;
+        return true;
     }
 
     @Override
