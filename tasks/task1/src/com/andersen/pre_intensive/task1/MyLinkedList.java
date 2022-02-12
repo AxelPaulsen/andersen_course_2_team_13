@@ -38,6 +38,19 @@ public class MyLinkedList<T> implements MyArrayList<T> {
     @Override
     public void concat(MyArrayList<T> newList) {
 
+        // TODO: 12.02.2022 need to extract as toArray()
+        Object[] ar = new Object[newList.size()];
+        int i = 0;
+        while (i < newList.size()) {
+            ar[i] = newList.get(i);
+        }
+
+        for (Object o : ar) {
+            T el = (T) o;
+            Node<T> node = new Node<>(el, null, lastNode);
+            lastNode.next = node;
+            lastNode = node;
+        }
     }
 
     @Override
